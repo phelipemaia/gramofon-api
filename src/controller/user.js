@@ -4,10 +4,17 @@ function User() {
 
 }
 
-User.prototype.create = function () {
-  var phelipe = new UserModel({id: 123, name: 'Phelipe'});
+User.prototype.create = function (user) {
+  user.created = new Date();
+  var user = new UserModel(user);
 
-  phelipe.save();
-}
+  user.save()
+      .then(function (success) {
+        console.info('User has been created: ', success);
+      })
+      .catch(function (e) {
+        console.error('Error while saving user: ', e);
+      });
+};
 
 module.exports = User;

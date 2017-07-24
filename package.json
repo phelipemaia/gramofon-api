@@ -6,5 +6,8 @@
     "restify" : "^5.0.1",
     "bluebird": "^3.5.0",
     "mongoose": "^4.11.3"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2"
   }
 }
