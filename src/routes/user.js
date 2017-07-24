@@ -9,13 +9,46 @@ module.exports = function (ctx) {
     server.post('/user', function(req, res, next) {
         let data = req.body || {};
 
-        let user = new User(data);
-        user.save()
-            .then(function (user) {
-                console.log('save');
-            })
-            .catch(function (error) {
-                console.loh('error');
-        });
+        let user = new User();
+        user.create(data)
+          .then(function (result) {
+            res.send(201, result);
+            next();
+          })
+          .catch(function (e) {
+            res.send(e);
+            next();
+          });
     });
+
+  server.put('/user', function(req, res, next) {
+    let data = req.body || {};
+
+    let user = new User();
+    user.update()
+      .then(function (user) {
+        res.send(user);
+        next();
+      })
+      .catch(function (e) {
+        res.send(e);
+        next();
+      });
+  });
+
+  server.get('/user/:username', function(req, res, next) {
+
+    let user = new User();
+    user.findByUsername(req.params.username)
+      .then(function (user) {
+        console.log('save');
+        res.send(user);
+        next();
+      })
+      .catch(function (error) {
+        console.loh('error');
+        res.send({});
+        next();
+      });
+  });
 }
