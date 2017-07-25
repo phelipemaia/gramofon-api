@@ -22,10 +22,8 @@ module.exports = function (ctx) {
     });
 
   server.put('/user', function(req, res, next) {
-    let data = req.body || {};
-
     let user = new User();
-    user.update()
+    user.update(data)
       .then(function (user) {
         res.send(user);
         next();
@@ -37,7 +35,6 @@ module.exports = function (ctx) {
   });
 
   server.get('/user/:username', function(req, res, next) {
-
     let user = new User();
     user.findByUsername(req.params.username)
       .then(function (user) {
@@ -51,4 +48,19 @@ module.exports = function (ctx) {
         next();
       });
   });
+
+    server.post('/login', function(req, res, next) {
+        let data = req.body || {};
+
+        let user = new User();
+        user.login(data)
+            .then(function (result) {
+                res.send(200, result);
+                next();
+            })
+            .catch(function (e) {
+                res.send(e);
+                next();
+            });
+    });
 }

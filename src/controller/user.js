@@ -58,4 +58,17 @@ User.prototype.findByUsername = function (username) {
     });
 };
 
+User.prototype.login = function (credentials) {
+  UserModel.findOne({username: credentials.username})
+    .then(function (user) {
+      if (user.password === credentials.password) {
+        //create token
+        console.info('User login: ', user);
+      }
+    })
+    .catch(function (e) {
+      console.error('Error while doing log in: ', e);
+    });
+};
+
 module.exports = User;
