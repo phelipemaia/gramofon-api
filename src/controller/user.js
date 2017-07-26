@@ -7,9 +7,9 @@ function User() {
 
 User.prototype.create = function (user) {
   user.created = new Date();
-  let user = new UserModel(user);
+  let userModel = new UserModel(user);
 
-  return user.save()
+  return userModel.save()
     .then(function (createdUser) {
       console.info('User has been created: ', createdUser);
       return {'id': createdUser._id, 'username': createdUser.username};
@@ -34,22 +34,25 @@ User.prototype.update = function (user) {
 };
 
 User.prototype.findById = function (user) {
-  user.created = new Date();
-  var user = new UserModel(user);
 
-  user.save()
-    .then(function (success) {
-      console.info('User has been created: ', success);
+};
+
+User.prototype.findOne = function (search) {
+  let user = new UserModel();
+
+  UserModel.findOne(search)
+    .then(function (user) {
+      console.info('User has been created: ', user);
     })
     .catch(function (e) {
       console.error('Error while saving user: ', e);
     });
 };
 
-User.prototype.findByUsername = function (username) {
-  var user = new UserModel();
+User.prototype.find = function (search) {
+  let user = new UserModel();
 
-  UserModel.findOne({username: username})
+  UserModel.find(search)
     .then(function (user) {
       console.info('User has been created: ', user);
     })
@@ -59,15 +62,17 @@ User.prototype.findByUsername = function (username) {
 };
 
 User.prototype.login = function (credentials) {
-  UserModel.findOne({username: credentials.username})
+  return UserModel.findOne({username: credentials.username})
     .then(function (user) {
       if (user.password === credentials.password) {
         //create token
         console.info('User login: ', user);
+        return {username: user.username};
       }
     })
     .catch(function (e) {
       console.error('Error while doing log in: ', e);
+      return {'error': e};
     });
 };
 

@@ -6,20 +6,20 @@ module.exports = function (ctx) {
     const db = ctx.db,
         server = ctx.server;
 
-    server.post('/user', function(req, res, next) {
-        let data = req.body || {};
+  server.post('/user', function(req, res, next) {
+    let data = req.body || {};
 
-        let user = new User();
-        user.create(data)
-          .then(function (result) {
-            res.send(201, result);
-            next();
-          })
-          .catch(function (e) {
-            res.send(e);
-            next();
-          });
-    });
+    let user = new User();
+    user.create(data)
+      .then(function (result) {
+        res.send(201, result);
+        next();
+      })
+      .catch(function (e) {
+        res.send(e);
+        next();
+      });
+  });
 
   server.put('/user', function(req, res, next) {
     let user = new User();
@@ -49,18 +49,18 @@ module.exports = function (ctx) {
       });
   });
 
-    server.post('/login', function(req, res, next) {
-        let data = req.body || {};
+  server.post('/login', function(req, res, next) {
+    let data = req.body || {};
 
-        let user = new User();
-        user.login(data)
-            .then(function (result) {
-                res.send(200, result);
-                next();
-            })
-            .catch(function (e) {
-                res.send(e);
-                next();
-            });
-    });
+    let user = new User();
+    user.login(data)
+      .then(function (result) {
+        res.send(200, result);
+        next();
+      })
+      .catch(function (e) {
+        res.send(e);
+        next();
+      });
+  });
 }
